@@ -4,8 +4,6 @@ import { FiltroCursosPipe } from './filtro-cursos.pipe';
 import { BooleanTextPipe } from './boolean-text.pipe';
 import { ApellidoPipe } from './apellido.pipe';
 
-
-
 @NgModule({
   declarations: [
     FiltroCursosPipe,
@@ -13,7 +11,9 @@ import { ApellidoPipe } from './apellido.pipe';
     ApellidoPipe
   ],
   exports: [
-    ApellidoPipe
+    ApellidoPipe,
+    BooleanTextPipe,
+    FiltroCursosPipe
   ],
   imports: [
     CommonModule

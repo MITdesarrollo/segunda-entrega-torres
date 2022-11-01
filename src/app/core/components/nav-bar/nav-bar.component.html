@@ -2,8 +2,8 @@
 <div class="cursos">
   <a routerLink="home">Home</a>
 </div>
-<ng-container>
-  <div class="cursos">
+<ng-container *ngIf="sesion$ | async as sesion">
+  <div class="cursos" *ngIf="sesion.sesionActiva">
     <a routerLink="courses">Courses</a>
     <a routerLink="students">Students</a>
   </div>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from "rxjs";
+import {Sesion} from "../../../login/models/sesion";
+import {SesionService} from "../../services/sesion.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-
-  constructor() { }
+  sesion$!: Observable<Sesion>
+  constructor(
+    private sesionService: SesionService
+  ) { }
 
   ngOnInit(): void {
+    this.sesion$ = this.sesionService.obtenerDatosSesion();
   }
-
 }
