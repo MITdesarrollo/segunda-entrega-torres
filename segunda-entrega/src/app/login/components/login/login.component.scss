@@ -1,0 +1,22 @@
+.container{
+  margin-top: 5rem;
+  background-image: url(../../../../assets/images/banner-1.png);
+  background-size:cover;
+  background-position: center;
+  border: 1px solid wheat;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 60%;
+  .form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .toggle{
+    color: white;
+    margin-top: 1rem;
+  }
+  .fill{
+    color: white;
+  }
+}

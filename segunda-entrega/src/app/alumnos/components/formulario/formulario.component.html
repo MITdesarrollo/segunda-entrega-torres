@@ -1,0 +1,71 @@
+<div class="container-fluid container-form-alumnos">
+  <div class="row">
+    <div class="col alta-alumno">
+      <h1 appTitleEstilo>Alta Alumno</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="formulario" (ngSubmit)="submitForm()">
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <input class="rounded" type="text" [ngClass]="{'form-control': true, 'is-invalid': formulario.get('nombre')?.errors && formulario.get('nombre')?.touched}" formControlName="nombre" placeholder="Nombre" aria-label="Nombre" aria-describedby="basic-addon1">
+              <div class="invalid-feedback">
+                <small *ngIf="formulario.get('nombre')?.errors?.['required'] && formulario.get('nombre')?.touched">El campo es requerido</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <input class="rounded" type="text" [ngClass]="{'form-control': true, 'is-invalid': formulario.get('apellido')?.errors && formulario.get('apellido')?.touched}" formControlName="apellido" placeholder="Apellido" aria-label="Apellido" aria-describedby="basic-addon1">
+              <div class="invalid-feedback">
+                <small *ngIf="formulario.get('apellido')?.errors?.['required'] && formulario.get('apellido')?.touched">El campo es requerido</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <input class="rounded" type="text" [ngClass]="{'form-control': true, 'is-invalid': formulario.get('username')?.errors && formulario.get('username')?.touched}" formControlName="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+              <div class="invalid-feedback">
+                <small *ngIf="formulario.get('username')?.errors?.['required'] && formulario.get('username')?.touched">El campo es requerido</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group mb-3">
+              <input class="rounded" type="password" [ngClass]="{'form-control': true, 'is-invalid': formulario.get('password')?.errors && formulario.get('password')?.touched}" formControlName="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+              <div class="invalid-feedback">
+                <small *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">El campo es requerido</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" formArrayName="cursos">
+            <div *ngFor="let curso of cursos.controls; let i=index">
+              <div class="input-group mb-3">
+                <input  type="text" class="form-control rounded" formControlName="{{ i }}"  placeholder="curso {{ i + 1}}" aria-label="Cursos" aria-describedby="basic-addon1">
+              </div>
+            </div>
+          </div>
+          <div class="col btn-formulario">
+            <button class="btn" (click)="agregarCurso()" type="button">Agregar Curso</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col btn-formulario">
+            <button class="btn" type="submit" [disabled]="!formulario.valid"> Inscribirme</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
