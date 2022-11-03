@@ -1,62 +1,58 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Alumno} from "../../models/alumnos";
 import {Subscription} from "rxjs";
-import {FormArray, FormBuilder, FormControl, Validators} from "@angular/forms";
+import { FormControl, FormGroup} from "@angular/forms";
 import {AlumnosService} from "../../service/alumnos.service";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.scss']
 })
-export class FormularioComponent implements OnInit, OnDestroy {
-  promesa: any;
-  //vars
-  alumnos!: Alumno[];
-  alumnosSubcription!: Subscription
+export class FormularioComponent implements OnInit {
 
-  formulario = this.formBuilder.group({
-    nombre: ['', [Validators.required]],
-    apellido: ['', [Validators.required]],
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    cursos: new FormArray([new FormControl()])
-  });
+alumnos!: Alumno[];
+subscription!: Subscription;
+formularioAlumno!: FormGroup;
+id!: number
 
-  constructor(
-    //firma del constructor, parametros//
-    private alumnoService: AlumnosService,
-    private formBuilder: FormBuilder
-  ) {}
 
-  ngOnInit(): void {
-    this.alumnosSubcription = this.alumnoService.alumnosData().subscribe(alumno => this.alumnos = alumno);
+ constructor(
+  private alumnoService: AlumnosService,
+  private router: Router,
+  private activatedroute: ActivatedRoute,
+
+ ){
+this.subscription = this.alumnoService.obtenerAlumnos().subscribe((a) => this.alumnos = a )
+
+this.formularioAlumno = new FormGroup({
+  
+  dni: new FormControl,
+  nombre: new FormControl,
+  apellido: new FormControl,
+  fechaNacimiento: new FormControl
+ })
+}
+
+guardarAlumno(){
+  let idAlumno:number = Math.max.apply(null, this.alumnos.map(o => o.id));
+
+  let c : Alumno = {
+    id: idAlumno+1,
+    dni: this.formularioAlumno.value.dni,
+    nombre: this.formularioAlumno.value.nombre,
+    apellido: this.formularioAlumno.value.apellido,
+    fechaNacimiento: this.formularioAlumno.value.fechaNacimiento
   }
+  this.alumnoService.agregarAlumno(c);
+  this.router.navigate(['students'])
+}
 
-  ngOnDestroy(): void{
-    if(this.alumnosSubcription){
-      this.alumnosSubcription.unsubscribe();
-    }
-  }
 
-  agregarAlumno($event: any): void{
-    let i:number= 0;
-    for(let item of this.alumnos){ i++ }
-    $event.id = i
-    this.alumnos.push($event)
-  }
-  //declaracion metodo submit
-  submitForm(): void{
-    this.agregarAlumno(this.formulario.value);
-    this.formulario.reset()
-  }
 
-  get cursos(): FormArray {
-    return this.formulario.get('cursos') as FormArray;
-  }
+ ngOnInit(): void {
 
-  agregarCurso(): void{
-    this.cursos.push(new FormControl());
-  }
-
+}
+  
 }

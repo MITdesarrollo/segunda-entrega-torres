@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.formulario = new FormGroup({
+      
       usuario: new FormControl(),
       contrasena: new FormControl(),
       admin: new FormControl()
@@ -26,8 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+
+    
+
     console.log(this.formulario.value);
-    this.sesioService.login(this.formulario.value.usuario, this.formulario.value.contrasena, this.formulario.value.admin);
+    this.sesioService.login(this.formulario.value.usuario, this.formulario.value.contrasena, this.formulario.value.admin, this.formulario.value.id);
     this.router.navigate(['home']);
   }
 

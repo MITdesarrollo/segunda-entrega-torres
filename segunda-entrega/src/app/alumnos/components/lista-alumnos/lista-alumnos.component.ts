@@ -1,43 +1,45 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Alumno} from "../../models/alumnos";
-import {Subscription} from "rxjs";
+import {map, Observable, Subscription} from "rxjs";
 import {AlumnosService} from "../../service/alumnos.service";
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-alumnos',
   templateUrl: './lista-alumnos.component.html',
   styleUrls: ['./lista-alumnos.component.scss']
 })
-export class ListaAlumnosComponent implements OnInit, OnDestroy {
-
+export class ListaAlumnosComponent implements OnInit {
+  alumno!: Alumno;
   alumnos!: Alumno[];
   alumnosSubcription!: Subscription
+  alumnos$!: Observable<Alumno[]>
+  
+  columnasAlumnos: string[] = ['id','dni','nombre/apellido','fecha-nacimiento','editar/borrar'];
+
+  dataSource: MatTableDataSource<Alumno>
 
   constructor(
-    private usuarioData: AlumnosService
-  ) {}
+    private alumnoService: AlumnosService,
+    private router: Router,
+  ) {
+    this.alumnos$ = this.alumnoService.obtenerAlumnos();
+    this.alumnosSubcription = this.alumnos$.subscribe((alumnos : Alumno[])=> this.alumnos = alumnos)
 
+    this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+  };
+  
   ngOnInit(): void {
-    this.usuarioData.alumnosData().subscribe(alumno => this.alumnos =alumno);
-  }
-  ngOnDestroy(): void{
-    if(this.alumnosSubcription){
-      this.alumnosSubcription.unsubscribe();
-    }
-  }
-  // funcion para asignarle un id a evento recibido y pushearlo al array que recibe el hijo
-  agregarUsuario($event: any): void{
-    let i:number= 0;
-    for(let item of this.alumnos){
-      i++
-    }
-    $event.id = i
-    this.alumnos.push($event)
-  }
+  
+}
 
-  // delete de la fila por id
-  deleteItem(i: number) {
-    this.alumnos = this.alumnos.filter(item => item.id !== i)
-  }
+eliminarAlumno(id: number){
+  this.alumnoService.eliminarAlumno(id);
+  this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
+}
+ editarAlumno(id: number){
+  this.router.navigate(['students/form'])
+ }
 
 }

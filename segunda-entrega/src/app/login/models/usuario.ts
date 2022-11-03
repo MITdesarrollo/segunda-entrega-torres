@@ -1,5 +1,6 @@
 export interface Usuario{
-  nombre: string;
+  id: string;
+  usuario: string;
   contrasena: string;
   admin: boolean;
 }

@@ -39,7 +39,7 @@ export class AddCourseComponent implements OnInit {
     }
     console.log(curso);
     this.cursoService.agregarCurso(curso);
-    this.router.navigate(['/courses'])
+    this.router.navigate(['/cursos'])
   }
 
   ngOnInit(): void {

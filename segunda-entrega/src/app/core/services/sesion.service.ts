@@ -1,3 +1,4 @@
+import { identifierName } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Sesion} from "../../login/models/sesion";
@@ -15,14 +16,15 @@ export class SesionService {
   };
 
 
-  login(usuario: string, contrasena: string, admin: boolean){
+  login(usuario: string, contrasena: string, admin: boolean, id: string){
 
     const sesion: Sesion = {
 
       sesionActiva: true,
 
       usuarioActivo: {
-        nombre: usuario,
+        id: id,
+        usuario: usuario,
         contrasena: contrasena,
         admin: admin
       }
@@ -32,5 +34,6 @@ export class SesionService {
 
   obtenerDatosSesion(): Observable<Sesion>{
     return this.sesionSubject.asObservable();
+    
   }
 }
