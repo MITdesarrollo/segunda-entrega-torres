@@ -39,7 +39,7 @@ eliminarAlumno(id: number){
   this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
 }
  editarAlumno(id: number){
-  this.router.navigate(['students/form'])
+  this.router.navigate(['students/edit-student'])
  }
 
 }

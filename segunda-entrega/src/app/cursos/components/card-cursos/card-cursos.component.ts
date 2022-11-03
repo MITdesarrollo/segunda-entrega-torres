@@ -60,8 +60,7 @@ export class CardsCursosComponent implements OnInit , OnDestroy{
   /* columna en especifico , filterPredicate lleva dos parametros*/
    this.cursos$ = this.cursosService.obtenerCursos().pipe(
     map(c => c.filter(
-      curso => curso.nombre.toLocaleLowerCase().includes(valorObtenido.toLocaleLowerCase()) ||
-      curso.fechaInicio.getMonth() + 1 == parseInt(valorObtenido)
+      curso => curso.nombre.toLocaleLowerCase().includes(valorObtenido.toLocaleLowerCase()) 
     ))
    );
   }
