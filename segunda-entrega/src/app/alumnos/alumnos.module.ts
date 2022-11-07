@@ -7,13 +7,17 @@ import { ListaAlumnosComponent } from './components/lista-alumnos/lista-alumnos.
 import {SharedModule} from "../shared/shared.module";
 import {PipesModule} from "../pipes/pipes.module";
 import {AlumnosService} from "./service/alumnos.service";
+import { DetalleAlumnosComponent } from './components/detalle-alumnos/detale-alumnos.component';
+import { AltaAlumnoComponent } from './components/alta-alumno/alta-alumno.component';
 
 
 @NgModule({
   declarations: [
     EditarAlumnoComponent,
     FormularioComponent,
-    ListaAlumnosComponent
+    ListaAlumnosComponent,
+    DetalleAlumnosComponent,
+    AltaAlumnoComponent
   ],
   imports: [
     CommonModule,

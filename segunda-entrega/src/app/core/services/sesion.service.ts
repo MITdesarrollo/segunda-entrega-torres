@@ -34,6 +34,5 @@ export class SesionService {
 
   obtenerDatosSesion(): Observable<Sesion>{
     return this.sesionSubject.asObservable();
-    
   }
 }

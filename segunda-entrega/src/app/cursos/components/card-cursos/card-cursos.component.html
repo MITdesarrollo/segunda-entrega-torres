@@ -41,7 +41,7 @@
               <button mat-icon-button (click)="eliminarCurso(curso.id)" *ngIf="sesion.usuarioActivo?.admin">
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button [routerLink]="'/'+ curso.id">
+              <button mat-icon-button [routerLink]="'/courses/'+ curso.id">
                 <mat-icon>visibility</mat-icon>
               </button>
             </div>

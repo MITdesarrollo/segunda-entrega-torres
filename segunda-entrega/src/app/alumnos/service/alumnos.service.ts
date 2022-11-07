@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Alumno} from "../models/alumnos";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,10 @@ export class AlumnosService {
   obtenerAlumnos(): Observable<Alumno[]>{
     return this.alumnosSubject.asObservable();
   }
-  obtenerAlumnoId(id: number){
-    return this.alumnos[id]
+  obtenerAlumnoId(id: number): Observable<Alumno>{
+    return this.obtenerAlumnos().pipe(
+      map((alumnos: Alumno[]) => alumnos.filter((alumno: Alumno)=> alumno.id === id)[0])
+    )
   }
   agregarAlumno(alumno: Alumno){
     this.alumnos.push(alumno);

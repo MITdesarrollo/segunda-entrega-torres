@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Sesion} from "../../../login/models/sesion";
 import {SesionService} from "../../services/sesion.service";
 
@@ -10,11 +10,14 @@ import {SesionService} from "../../services/sesion.service";
 })
 export class NavBarComponent implements OnInit {
   sesion$!: Observable<Sesion>
+  sesionSubscription!: Subscription
+  sesion!: Sesion
   constructor(
     private sesionService: SesionService
   ) { }
 
   ngOnInit(): void {
     this.sesion$ = this.sesionService.obtenerDatosSesion();
+    this.sesionSubscription = this.sesion$.subscribe((sesion: Sesion)=> this.sesion = sesion)
   }
 }

@@ -8,8 +8,8 @@ import {AdminGuard} from "./core/guards/admin.guard";
 
 const routes: Routes = [
   {path:'login', component: LoginComponent},
-  {path:'courses', loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule), canActivate: [AutenticacionGuard]},
-  {path:'students', loadChildren: () => import('./alumnos/alumnos.module').then((m => m.AlumnosModule)), canActivate: [AutenticacionGuard]},
+  {path:'courses', loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule), canActivate: [AutenticacionGuard] },
+  {path:'students', loadChildren: () => import('./alumnos/alumnos.module').then((m => m.AlumnosModule))},
   {path:'home', component: HomeComponent, canActivate: [AutenticacionGuard]},
   {path: '', redirectTo:'home', pathMatch:'full'},
   {path:'**', component: PaginaNoEncontradaComponent}
@@ -20,3 +20,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+/* canActivate: [AutenticacionGuard] */

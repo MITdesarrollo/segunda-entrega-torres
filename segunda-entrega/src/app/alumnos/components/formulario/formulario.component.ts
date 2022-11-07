@@ -49,8 +49,6 @@ guardarAlumno(){
   this.router.navigate(['students'])
 }
 
-
-
  ngOnInit(): void {
 
 }

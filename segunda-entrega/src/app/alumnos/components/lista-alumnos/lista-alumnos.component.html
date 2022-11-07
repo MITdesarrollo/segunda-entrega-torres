@@ -32,6 +32,9 @@
       <button mat-icon-button (click)="editarAlumno(alumno.id)">
           <mat-icon color="accent">edit</mat-icon> 
       </button>
+      <button mat-icon-button [routerLink]="'/students/'+ alumno.id">
+        <mat-icon color="warn">visibility</mat-icon> 
+    </button>
      </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnasAlumnos"></tr>
