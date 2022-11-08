@@ -16,7 +16,7 @@ export class SesionService {
   };
 
 
-  login(usuario: string, contrasena: string, admin: boolean, id: string){
+  login(usuario: string, contrasena: string, admin: boolean, id: number){
 
     const sesion: Sesion = {
 
@@ -26,7 +26,8 @@ export class SesionService {
         id: id,
         usuario: usuario,
         contrasena: contrasena,
-        admin: admin
+        admin: admin,
+
       }
     }
     this.sesionSubject.next(sesion);

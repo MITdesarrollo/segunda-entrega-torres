@@ -1,46 +1,58 @@
 import { Injectable } from '@angular/core';
 import {Alumno} from "../models/alumnos";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import { catchError, Observable, throwError} from "rxjs";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlumnosService {
-  alumnos: Alumno []=[
-    { id:0, nombre:'Juan', apellido:'Gomez', fechaNacimiento: new Date('2000-08-1'), dni:100},
-    { id:1, nombre:'Juana',  apellido:'Perez', fechaNacimiento: new Date('2000-08-1'), dni:200}
-  ];
+ 
+  constructor(
+    private http: HttpClient
+  ) {}
 
-  private alumnosSubject: BehaviorSubject<Alumno[]>;
-  constructor() {
-    this.alumnosSubject = new BehaviorSubject<Alumno[]>(this.alumnos)
-  }
   obtenerAlumnos(): Observable<Alumno[]>{
-    return this.alumnosSubject.asObservable();
+    
+    return  this.http.get<Alumno[]>(`${environment.apiUrl}/alumnos`,{
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'encoding': 'Utf-8'
+      })
+    })
   }
   obtenerAlumnoId(id: number): Observable<Alumno>{
-    return this.obtenerAlumnos().pipe(
-      map((alumnos: Alumno[]) => alumnos.filter((alumno: Alumno)=> alumno.id === id)[0])
-    )
+    return  this.http.get<Alumno>(`${environment.apiUrl}/alumnos/${id}`,{
+      headers: new HttpHeaders({
+        'content-type': 'application/json',
+        'encoding': 'Utf-8'
+      })
+    })
   }
   agregarAlumno(alumno: Alumno){
-    this.alumnos.push(alumno);
-    this.alumnosSubject.next(this.alumnos);
+    this.http.post(`${environment.apiUrl}/alumnos`, alumno).pipe(catchError(this.manejoError)).subscribe();
   }
+
   eliminarAlumno(id: number){
-  let indice = this.alumnos.findIndex((c: Alumno) => c.id === id);
-  if(indice > -1){
-    this.alumnos.splice(indice, 1)
-  }
-  this.alumnosSubject.next(this.alumnos)
+  this.http.delete<Alumno>(`${environment.apiUrl}/alumnos/${id}`).pipe(catchError(this.manejoError)).subscribe();
   }
 
   editarAlumno(alumno : Alumno){
-    let indice = this.alumnos.findIndex((c: Alumno)=> c.id === alumno.id)
-    if(indice > -1){
-      this.alumnos[indice] = alumno;
-    }
-    this.alumnosSubject.next(this.alumnos)
+    this.http.put<Alumno>(`${environment.apiUrl}/alumnos/${alumno.id}`, alumno).pipe(catchError(this.manejoError)).subscribe();
   }
+  
 
+
+  /* esto es para capturar los errores */
+
+  private manejoError(error: HttpErrorResponse){
+    if(error.error instanceof ErrorEvent){
+      console.warn('error del aldo del cliente', error.error.message);
+    }else{
+      console.warn('error del aldo del servidor', error.error.message);
+    }
+
+    return throwError(()=> new Error('error en la conmunicacion HTTP'))
+  };
 }

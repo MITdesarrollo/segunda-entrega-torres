@@ -10,6 +10,7 @@ import {Sesion} from "../../login/models/sesion";
 export class AdminGuard implements CanActivate {
   constructor(
     private sesionService: SesionService,
+    
     private router: Router
   ){
 
@@ -22,8 +23,6 @@ export class AdminGuard implements CanActivate {
         if(sesion.usuarioActivo?.admin){
           return true;
         } else{
-          alert('no tiene permiso');
-          this.router.navigate(['home'])
           return false;
         }
       })

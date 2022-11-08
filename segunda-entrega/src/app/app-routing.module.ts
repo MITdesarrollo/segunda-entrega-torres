@@ -5,11 +5,13 @@ import {PaginaNoEncontradaComponent} from "./core/components/pagina-no-encontrad
 import {LoginComponent} from "./login/components/login/login.component";
 import {AutenticacionGuard} from "./core/guards/autenticacion.guard";
 import {AdminGuard} from "./core/guards/admin.guard";
+import { RegisterComponent } from './login/components/register/register.component';
 
 const routes: Routes = [
+  {path: 'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'courses', loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule), canActivate: [AutenticacionGuard] },
-  {path:'students', loadChildren: () => import('./alumnos/alumnos.module').then((m => m.AlumnosModule))},
+  {path:'students', loadChildren: () => import('./alumnos/alumnos.module').then((m => m.AlumnosModule)), canActivate: [AutenticacionGuard]},
   {path:'home', component: HomeComponent, canActivate: [AutenticacionGuard]},
   {path: '', redirectTo:'home', pathMatch:'full'},
   {path:'**', component: PaginaNoEncontradaComponent}

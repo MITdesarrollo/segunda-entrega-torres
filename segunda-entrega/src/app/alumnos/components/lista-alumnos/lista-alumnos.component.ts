@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SesionService } from 'src/app/core/services/sesion.service';
 import { Sesion } from 'src/app/login/models/sesion';
+import { UsuarioService } from 'src/app/core/services/usuario.service';
+import { Usuario } from 'src/app/login/models/usuario';
 
 @Component({
   selector: 'app-lista-alumnos',
@@ -27,34 +29,40 @@ export class ListaAlumnosComponent implements OnInit {
   sesion!: Sesion[];
   sesion$!: any;
   sesionSubcription!: Subscription
-   
-  datosAMostrar!: Alumno[];
+  
+  usuario$!: Observable<Usuario[]>
 
   constructor(
     private alumnoService: AlumnosService,
     private router: Router,
-    private sesionService :SesionService
+    private sesionService :SesionService,
+    
   ) {
     this.alumnos$ = this.alumnoService.obtenerAlumnos();
     this.alumnosSubcription = this.alumnos$.subscribe((alumnos : Alumno[])=> this.alumnos = alumnos)
+    
     
     this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
     
     this.sesion$= this.sesionService.obtenerDatosSesion();
     this.sesionSubcription = this.sesion$.subscribe((sesion: Sesion[]) => this.sesion = sesion)
-
+    
+    
+   
   };
   
   ngOnInit(): void {
-  
+   
 }
 
 eliminarAlumno(id: number){
   this.alumnoService.eliminarAlumno(id);
   this.dataSource = new MatTableDataSource<Alumno>(this.alumnos);
 }
- editarAlumno(id: number){
-  this.router.navigate(['students/edit-student'])
+ editarAlumno(alumno: Alumno){
+  this.router.navigate(['students/edit-student', alumno])
  }
+ 
+ 
 
 }

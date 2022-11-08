@@ -15,7 +15,7 @@
   <div class="cont-2">
     <div class="row">
 
-      <div *ngFor="let curso of cursos$ |async" class="col-md-3">
+      <div *ngFor="let curso of cursos$ | async" class="col-md-3">
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{ curso.nombre }}</mat-card-title>
@@ -35,10 +35,10 @@
           
           <mat-card-actions align="end">
             <div >
-              <button mat-icon-button (click)="editarCurso(curso)" *ngIf="sesion.usuarioActivo?.admin">
+              <button mat-icon-button (click)="editarCurso(curso)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button (click)="eliminarCurso(curso.id)" *ngIf="sesion.usuarioActivo?.admin">
+              <button mat-icon-button (click)="eliminarCurso(curso.id)">
                 <mat-icon>delete</mat-icon>
               </button>
               <button mat-icon-button [routerLink]="'/courses/'+ curso.id">
@@ -55,3 +55,4 @@
 </div>
 
 <!-- <button routerLink="/courses/edit-course">IR A EDITAR CURSO</button> -->
+<!-- *ngIf="sesion.usuarioActivo?.admin" -->

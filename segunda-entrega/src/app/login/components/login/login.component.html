@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="formulario"  (ngSubmit)="login()" class="form">
+  <form [formGroup]="formulario"  (ngSubmit)="validacionUsuario()" class="form">
     <div class="row">
       <div class="col-md-5">
         <mat-form-field appearance="fill" class="fill">
@@ -18,12 +18,8 @@
     </div>
     <div class="row">
       <div class="col-md-2" >
-        <button type="submit" mat-raised-button color="primary" >Go</button>
-      </div>
-      <div class="toggle">
-        <mat-slide-toggle formControlName="admin">Sos admin?!</mat-slide-toggle>
+        <button type="submit" mat-raised-button color="primary">Go</button>
       </div>
     </div>
   </form>
-
 </div>

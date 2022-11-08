@@ -22,10 +22,6 @@ export class EditarAlumnoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
   
   ) {
-   
-  }
-
-  ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((parametros)=>{
       console.log(parametros);
       this.id = parseInt(parametros.get('id') || '')
@@ -36,6 +32,10 @@ export class EditarAlumnoComponent implements OnInit {
       fechaNacimiento: new FormControl(parametros.get('fechaNacimiento'))
       })
     })
+  }
+
+  ngOnInit(): void {
+    
   }
   
   editarAlumno(){

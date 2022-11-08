@@ -4,6 +4,8 @@ import { Alumno } from '../../models/alumnos';
 import { AlumnosService } from '../../service/alumnos.service';
 import {Observable, Subscription} from 'rxjs'
 import { ActivatedRoute } from '@angular/router';
+import { SesionService } from 'src/app/core/services/sesion.service';
+import { Sesion } from 'src/app/login/models/sesion';
 @Component({
   selector: 'app-alta-alumno',
   templateUrl: './alta-alumno.component.html',
@@ -15,9 +17,14 @@ export class AltaAlumnoComponent implements OnInit {
   alumnos!: Alumno[];
   alumnoSubscription!: Subscription
   
+
+  sesion!: Sesion[];
+  sesion$!: any;
+  sesionSubcription!: Subscription
   
   constructor(
     private alumnoService: AlumnosService,
+    private sesionService :SesionService,
     
   ) { 
 
@@ -29,11 +36,16 @@ export class AltaAlumnoComponent implements OnInit {
       apellido: new FormControl,
       fechaNacimiento: new FormControl
      })  
+
+     this.sesion$= this.sesionService.obtenerDatosSesion();
+     this.sesionSubcription = this.sesion$.subscribe((sesion: Sesion[]) => this.sesion = sesion)
   }
 
   altaAlumno(){
     let idAlumno:number = Math.max.apply(null, this.alumnos.map(o => o.id));
-  
+    /* let usuarioA =this.sesion[0].usuarioActivo?.usuario */
+   
+    
     let c : Alumno = {
       id: idAlumno+1,
       dni: this. formularioAltaAlumno.value.dni,
@@ -41,16 +53,19 @@ export class AltaAlumnoComponent implements OnInit {
       apellido: this. formularioAltaAlumno.value.apellido,
       fechaNacimiento: this. formularioAltaAlumno.value.fechaNacimiento
     }
-    this.alumno = c
-    console.log(this.alumno);
     
+    
+    this.alumno = c
     this.alumnoService.agregarAlumno(c);
+    console.log(this.sesion[1].usuarioActivo?.usuario);
+   
+    
   }
   
   ngOnInit(): void {
-   console.log(this.alumno);
+   
    
   }
   
-  
+ 
 }

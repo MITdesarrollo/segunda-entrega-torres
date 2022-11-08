@@ -22,7 +22,7 @@ export class AutenticacionGuard implements CanActivate {
         if (sesion.sesionActiva) {
           return true;
         } else {
-          this.router.navigate(['login'])
+          this.router.navigate(['register'])
           return false;
         }
       })
