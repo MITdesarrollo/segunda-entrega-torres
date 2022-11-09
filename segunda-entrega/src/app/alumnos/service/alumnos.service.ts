@@ -22,7 +22,7 @@ export class AlumnosService {
       })
     })
   }
-  obtenerAlumnoId(id: number): Observable<Alumno>{
+  obtenerAlumnoId(id: number | undefined): Observable<Alumno>{
     return  this.http.get<Alumno>(`${environment.apiUrl}/alumnos/${id}`,{
       headers: new HttpHeaders({
         'content-type': 'application/json',

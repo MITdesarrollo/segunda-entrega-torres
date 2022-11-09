@@ -6,6 +6,6 @@ export interface Alumno{
   nombre: string;
   fechaNacimiento: Date;
   apellido: string;
-  usuarioA?: string;
+  idUsuario?: number;
 }
 

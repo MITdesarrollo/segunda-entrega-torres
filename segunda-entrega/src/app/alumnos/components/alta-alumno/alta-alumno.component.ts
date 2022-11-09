@@ -16,19 +16,24 @@ export class AltaAlumnoComponent implements OnInit {
   alumno!: Alumno;
   alumnos!: Alumno[];
   alumnoSubscription!: Subscription
-  
+  alumno$!: Observable<Alumno[]>
 
-  sesion!: Sesion[];
+  sesion!: Sesion;
   sesion$!: any;
   sesionSubcription!: Subscription
   
+  usuario!: any;
+  usuario$!: Observable<Alumno>
+  usuarioSubcription!: Subscription
+
   constructor(
     private alumnoService: AlumnosService,
     private sesionService :SesionService,
     
   ) { 
-
-    this.alumnoSubscription = this.alumnoService.obtenerAlumnos().subscribe((a) => this.alumnos = a )
+     this.alumno$ = this.alumnoService.obtenerAlumnos();
+     this.alumnoSubscription = this.alumno$.subscribe((alumnos: Alumno[]) => this.alumnos = alumnos )
+   
 
     this.formularioAltaAlumno = new FormGroup({
       dni: new FormControl,
@@ -38,12 +43,12 @@ export class AltaAlumnoComponent implements OnInit {
      })  
 
      this.sesion$= this.sesionService.obtenerDatosSesion();
-     this.sesionSubcription = this.sesion$.subscribe((sesion: Sesion[]) => this.sesion = sesion)
+     this.sesionSubcription = this.sesion$.subscribe((sesion: Sesion) => this.sesion = sesion)
   }
 
   altaAlumno(){
     let idAlumno:number = Math.max.apply(null, this.alumnos.map(o => o.id));
-    /* let usuarioA =this.sesion[0].usuarioActivo?.usuario */
+    let idUsuario:number = Number(this.sesion.usuarioActivo?.id)
    
     
     let c : Alumno = {
@@ -54,16 +59,14 @@ export class AltaAlumnoComponent implements OnInit {
       fechaNacimiento: this. formularioAltaAlumno.value.fechaNacimiento
     }
     
+    this.alumno = {...c, idUsuario}
     
-    this.alumno = c
     this.alumnoService.agregarAlumno(c);
-    console.log(this.sesion[1].usuarioActivo?.usuario);
+    console.log(this.alumno);
    
-    
   }
   
   ngOnInit(): void {
-   
    
   }
   
